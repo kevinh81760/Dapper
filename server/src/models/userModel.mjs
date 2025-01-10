@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import bcrypt from 'bcrptjs';
+import bcrypt from 'bcryptjs';
 
 // Define Schema
 const userSchema = new mongoose.Schema(
