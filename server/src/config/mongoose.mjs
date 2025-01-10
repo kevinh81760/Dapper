@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv'
 
-mongoose.connect("mongodb://localhost/")
+dotenv.config();
+
+mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("Connected to Database"))
     .catch((err) => console.log(`Error ${err}`));
