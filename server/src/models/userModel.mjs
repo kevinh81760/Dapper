@@ -2,10 +2,12 @@ import mongoose from "mongoose";
 import bcrypt from 'bcryptjs';
 
 // Define Schema
-const userSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema
+(
     {   
         username: { type: String, required: true, unique: true},
-        password: { type: String, required: true }
+        password: { type: String, required: true },
+        role: { type: String, enum: ['seller', 'buyer'], default: 'buyer' }
     },
     {
     timestamps: true 

@@ -2,8 +2,11 @@ import express from 'express';
 import dotenv from 'dotenv';
 import session from 'express-session';
 import MongoDBStore from 'connect-mongodb-session';
+import expressSession from 'express-session';
 import userRoutes from './routes/userRoutes.mjs';
+import productRoutes from './routes/productRoutes.mjs';
 import connectDB from './config/mongoConnect.mjs';
+import passport from './config/passport.mjs';
 
 dotenv.config();
 
@@ -41,6 +44,14 @@ app.use(express.json());
 // Mount user routes
 app.use('/users', userRoutes);
 
+// Mount product routes
+app.use('/products', productRoutes);
+
+//Mount passport
+app.use(expressSession({ secret: 'your-secret', resave: false, saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Root route
 app.get('/', (req, res) => 
 {
@@ -49,12 +60,12 @@ app.get('/', (req, res) =>
 
 //Start the server
 app.listen(PORT, (err) => 
+{
+    if(err) 
     {
-        if(err) 
-        {
-            console.error('Failed to start server: ${err.message}')
-            process.exit(1);
-        }
-        console.log(`Running on Port ${PORT}`);
-    });
+        console.error('Failed to start server: ${err.message}')
+        process.exit(1);
+    }
+    console.log(`Running on Port ${PORT}`);
+});
 
